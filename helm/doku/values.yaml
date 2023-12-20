@@ -1,0 +1,55 @@
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/dokulabs/ingester
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+imagePullSecrets: []
+
+service:
+  type: LoadBalancer
+  port: 9044
+  sessionAffinity: None
+
+resources: 
+  limits:
+    cpu: 1000m
+    memory: 1280Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+config:
+    db_user: admin
+    db_password: &db_password "DOKU"
+    db_name: postgres
+    db_port: &db_port "5432"
+    db_host: &db_host "doku"
+    db_sslmode: require
+    db_max_open_conns: "10"
+    db_max_idle_conns: "10"
+    data_table_name: DOKU
+    apikey_table_name: APIKEY
+
+timescaledb-single:
+  enabled: true
+  fullnameOverride: *db_host
+  secrets:
+    credentials:
+      PATRONI_admin_PASSWORD: *db_password
+  service:
+    primary:
+      type: LoadBalancer
+      port: *db_port
+  persistentVolumes:
+    data:
+      size: 10Gi

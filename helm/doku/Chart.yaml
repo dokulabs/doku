@@ -1,0 +1,10 @@
+apiVersion: v2
+name: doku
+description: A Helm chart for Doku
+type: application
+version: 0.0.1
+appVersion: "v0.0.3"
+dependencies:
+- name: timescaledb-single
+  version: 0.33.1
+  repository: "https://charts.timescale.com/"
