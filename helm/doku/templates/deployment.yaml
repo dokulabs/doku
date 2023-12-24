@@ -30,6 +30,19 @@ spec:
         {{- else }}
         args: ["--config", "/config/{{ .Values.config.configMap.filename }}"]
         {{- end }}
+        {{- if .Values.config.secret.existingSecret }}
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.config.secret.name }}
+              key: {{ .Values.config.secret.passwordKey}}
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.config.secret.name }}
+              key: {{ .Values.config.secret.usernameKey }}
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /

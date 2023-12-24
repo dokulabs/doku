@@ -13,8 +13,12 @@ data:
 
     dbConfig:
       name: {{ .Values.config.dbConfig.name | quote }}
+      {{- if .Values.config.dbConfig.username }}
       username: {{ .Values.config.dbConfig.username | quote }}
+      {{- end }}
+      {{- if .Values.config.dbConfig.password }}
       password: {{ .Values.config.dbConfig.password | quote }}
+      {{- end }}
       {{- if .Values.timescaledb.enabled }}
       host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
       {{- else }}

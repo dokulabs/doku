@@ -1,8 +1,10 @@
 nameOverride: ""
 fullnameOverride: ""
 
+# Replica count for the Ingestor
 replicaCount: 1
 
+# Image repository and tag
 image:
   repository: ghcr.io/dokulabs/ingester
   pullPolicy: IfNotPresent
@@ -10,11 +12,13 @@ image:
   tag: "0.0.2"
 imagePullSecrets: []
 
+# Ingester Service Configuration
 service:
   type: LoadBalancer
   port: 9044
   sessionAffinity: None
 
+# Ingester Configuration for resource limits and requests
 resources: 
   limits:
     cpu: 1000m
@@ -29,26 +33,43 @@ tolerations: []
 affinity: {}
 
 config:
+  # If you want to use your own config file, set existingConfig to true and provide the name of the config file
   existingConfig: false
+  # Name of the config file in the configMap
   filename: "config.yml" # Name of the config file to be created in the configMap
   configMap:
     # If you want to use your own configMap, set existingConfig to true and provide the name of the configMap
     name: ""
-    filename: "config.yml" # Name of the config file in the configMap
- 
+    # Name of the config file in the configMap
+    filename: "config.yml" 
+  
+
+  secret:
+    # If you want to use a secret to configure Username and password for TimescaleDB, set existingSecret to true and provide the name of the secret
+    # and the keys for the username and password
+    existingSecret: true
+    # Name of the secret that contains the TimescaleDB User and Password
+    name: "doku-ingester-secret"  
+    # Key in the secret that contains the TimescaleDB User's password         
+    passwordKey: "password"    
+    # Key in the secret that contains the TimescaleDB User name
+    usernameKey: "username"    
+  
   # Comment out either 'localFile' or 'url' to use only one at a time.  
   pricingInfo:
+    # Path to local JSON file with LLM Pricing data
     # localFile:
     #   path: "../assets/pricing.json" # Path to local JSON file with LLM Pricing data
-    url: "https://raw.githubusercontent.com/dokulabs/ingester/main/assets/pricing.json" # URL to download Pricing data file
+    # URL to download Pricing data file
+    url: "https://raw.githubusercontent.com/dokulabs/ingester/main/assets/pricing.json"
   
   # Configuration for the Doku Backend Database (TimescaleDB)
   dbConfig:
     name: postgres
-    username: admin
-    password: &db_password "DOKU"
+    # username: admin
+    # password: &dbPassword "DOKU"
     host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
-    port: &db_port "5432"
+    port: &dbPort "5432"
     sslmode: require
     maxOpenConns: "10"
     maxIdleConns: "10"
@@ -63,16 +84,17 @@ config:
       logsUsername: "your_loki_username"
       cloudAccessToken: "your_grafana_cloud_api_token"
 
+# Configuration for the Doku Backend Database (TimescaleDB)
 timescaledb:
   enabled: true
   fullnameOverride: "{{ .Release.Name }}-db"
   secrets:
     credentials:
-      PATRONI_admin_PASSWORD: *db_password
+      PATRONI_admin_PASSWORD: "DOKU"
   service:
     primary:
       type: LoadBalancer
-      port: *db_port
+      port: *dbPort
   persistentVolumes:
     data:
       size: 10Gi
