@@ -41,19 +41,19 @@ config:
     # If you want to use your own configMap, set existingConfig to true and provide the name of the configMap
     name: ""
     # Name of the config file in the configMap
-    filename: "config.yml" 
+    filename: "" 
   
 
   secret:
     # If you want to use a secret to configure Username and password for TimescaleDB, set existingSecret to true and provide the name of the secret
     # and the keys for the username and password
-    existingSecret: true
+    existingSecret: false
     # Name of the secret that contains the TimescaleDB User and Password
-    name: "doku-ingester-secret"  
+    name: ""  
     # Key in the secret that contains the TimescaleDB User's password         
-    passwordKey: "password"    
+    passwordKey: ""    
     # Key in the secret that contains the TimescaleDB User name
-    usernameKey: "username"    
+    usernameKey: ""    
   
   # Comment out either 'localFile' or 'url' to use only one at a time.  
   pricingInfo:
@@ -66,8 +66,10 @@ config:
   # Configuration for the Doku Backend Database (TimescaleDB)
   dbConfig:
     name: postgres
-    # username: admin
-    # password: &dbPassword "DOKU"
+    # if you set secrets.existingSecret to true, Skip the username field 
+    username: admin
+    # if you set secrets.existingSecret to true, Skip the password field
+    password: &dbPassword "DOKU"
     host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
     port: &dbPort "5432"
     sslmode: require
