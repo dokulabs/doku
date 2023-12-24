@@ -24,6 +24,12 @@ spec:
         ports:
         - name: http
           containerPort: {{ .Values.service.port }}
+        command: ["/app/ingester"]
+        {{- if not .Values.config.existingConfig }}
+        args: ["--config", "/config/{{ .Values.config.filename }}"]
+        {{- else }}
+        args: ["--config", "/config/{{ .Values.config.configMap.filename }}"]
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /
@@ -32,11 +38,19 @@ spec:
           httpGet:
             path: /
             port: http
-        envFrom:
-        - secretRef:
-            name: {{ include "doku.fullname" . }}-db-config
         resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            {{- if not .Values.config.existingConfig }}
+            name: {{ include "doku.fullname" . }}-ingester-config
+            {{- else }}
+            name: {{ .Values.config.configMap.name }}
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

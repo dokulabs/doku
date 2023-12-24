@@ -7,7 +7,7 @@ image:
   repository: ghcr.io/dokulabs/ingester
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.0.2"
 imagePullSecrets: []
 
 service:
@@ -29,20 +29,43 @@ tolerations: []
 affinity: {}
 
 config:
-    db_user: admin
-    db_password: &db_password "DOKU"
-    db_name: postgres
-    db_port: &db_port "5432"
-    db_host: &db_host "doku"
-    db_sslmode: require
-    db_max_open_conns: "10"
-    db_max_idle_conns: "10"
-    data_table_name: DOKU
-    apikey_table_name: APIKEY
+  existingConfig: false
+  filename: "config.yml" # Name of the config file to be created in the configMap
+  configMap:
+    # If you want to use your own configMap, set existingConfig to true and provide the name of the configMap
+    name: ""
+    filename: "config.yml" # Name of the config file in the configMap
+ 
+  # Comment out either 'localFile' or 'url' to use only one at a time.  
+  pricingInfo:
+    # localFile:
+    #   path: "../assets/pricing.json" # Path to local JSON file with LLM Pricing data
+    url: "https://raw.githubusercontent.com/dokulabs/ingester/main/assets/pricing.json" # URL to download Pricing data file
+  
+  # Configuration for the Doku Backend Database (TimescaleDB)
+  dbConfig:
+    name: postgres
+    username: admin
+    password: &db_password "DOKU"
+    host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
+    port: &db_port "5432"
+    sslmode: require
+    maxOpenConns: "10"
+    maxIdleConns: "10"
+    dataTable: DOKU
+    apiKeyTable: APIKEY
+  
+  # Configure Platform to export LLM Observability Data from Doku
+  observabilityPlatform:
+    enabled: false
+    grafanaCloud:
+      logsUrl: "https://logs-prod-us-central1.grafana.net"
+      logsUsername: "your_loki_username"
+      cloudAccessToken: "your_grafana_cloud_api_token"
 
-timescaledb-single:
+timescaledb:
   enabled: true
-  fullnameOverride: *db_host
+  fullnameOverride: "{{ .Release.Name }}-db"
   secrets:
     credentials:
       PATRONI_admin_PASSWORD: *db_password
