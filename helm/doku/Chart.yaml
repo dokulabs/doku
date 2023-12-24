@@ -3,7 +3,7 @@ name: doku
 description: A Helm chart for Doku
 type: application
 version: 0.0.1
-appVersion: "0.0.2"
+appVersion: 0.0.1
 dependencies:
 - name: timescaledb-single
   alias: timescaledb

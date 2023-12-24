@@ -9,7 +9,7 @@ image:
   repository: ghcr.io/dokulabs/ingester
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.0.2"
+  tag: ""
 imagePullSecrets: []
 
 # Ingester Service Configuration
