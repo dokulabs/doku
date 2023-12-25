@@ -2,8 +2,7 @@ name: Helm Release
 
 on:
   push:
-    branches:
-      - main
+    tags: [ 'helm-*.*.*' ]
 
 jobs:
   release:

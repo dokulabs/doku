@@ -1,4 +1,5 @@
 # Doku Helm Chart
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
 
 ## Introduction
 
@@ -9,8 +10,8 @@ Doku is an observability tool for Large Language Models (LLM). This Helm chart d
 To install the Doku chart with the release name `my-doku`:
 
 ```bash
-helm repo add doku https://dokulabs.github.io/doku/
-helm install doku doku/doku
+helm repo add dokulabs https://dokulabs.github.io/doku/
+helm install doku dokulabs/doku
 ```
 
 ## Getting Started post Installation
@@ -128,13 +129,13 @@ You can adjust the Doku configuration by specifying each parameter using the `--
 helm install doku \
   --set service.type=NodePort \
   --set service.port=8080 \
-  doku/doku
+  dokulabs/doku
 ```
 
 Alternatively, you can provide a YAML file that specifies the values for the required parameters while installing the chart. For example:
 
 ```bash
-helm install doku -f values.yaml doku/doku
+helm install doku -f values.yaml dokulabs/doku
 ```
 
 ## Uninstalling the Chart
@@ -150,7 +151,7 @@ helm delete doku
 To upgrade the `doku` deployment:
 
 ```bash
-helm upgrade doku doku/doku
+helm upgrade doku dokulabs/doku
 ```
 
 If you've made any changes to [`values.yml`](values.yml), remember to use the `-f` flag to provide the updated file.
