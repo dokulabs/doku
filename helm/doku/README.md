@@ -119,7 +119,7 @@ The following table lists the configurable parameters of the Doku chart and thei
 | `timescaledb.persistentVolumes.data.size`   | Size of the persistent volume for TimescaleDB data                                                   | `10Gi`                                                                        |
 
 
-**Note**: Although the table above shows the parameters. Refer to [`values.yml`](values.yml) for a full list.
+**Note**: Although the table above shows the parameters. Refer to [`values.yaml`](values.yaml) for a full list.
 
 ### Configuring Doku
 
@@ -154,7 +154,7 @@ To upgrade the `doku` deployment:
 helm upgrade doku dokulabs/doku
 ```
 
-If you've made any changes to [`values.yml`](values.yml), remember to use the `-f` flag to provide the updated file.
+If you've made any changes to [`values.yaml`](values.yaml), remember to use the `-f` flag to provide the updated file.
 
 ### Support
 
