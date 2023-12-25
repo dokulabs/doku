@@ -13,11 +13,11 @@ helm repo add dokulabs https://dokulabs.io/helm/charts
 helm install doku dokulabs/doku
 ```
 
-### Post-Installation Steps
+## Getting Started post Installation
 
 After the Doku chart is successfully deployed to your Kubernetes cluster, you'll need to generate an API key that can be used by the Dokumetry SDKs to authenticate requests to the Doku platform.
 
-#### Generating Your First API Key
+### Generating Your First API Key
 
 To create an API key, follow these steps:
 
@@ -53,7 +53,7 @@ To create an API key, follow these steps:
 
     Store the provided API key securely; this is the only time you will see it in full.
 
-## Getting Started with sending LLM Observability data to Doku
+## Start sending LLM Observability data to Doku
 
 Once Doku has been installed in your cluster and API Key, You can configure the `dokumetry` Python and Node SDKs in your LLM Application. These SDKs are designed to collect and send observability data directly to your instance of Doku, providing valuable insights and metrics to monitor and analyze the performance and usage of your Large Language Models (LLM).
 
