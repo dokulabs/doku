@@ -47,7 +47,7 @@ To create an API key, follow these steps:
     ```json
     {
         "status": "200",
-        "message": "dk******",
+        "message": "dk*****************",
     }
     ```
 
