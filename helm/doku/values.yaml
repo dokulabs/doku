@@ -1,0 +1,116 @@
+nameOverride: ""
+fullnameOverride: ""
+
+# Replica count for the Ingestor
+replicaCount: 1
+
+# Image repository and tag
+image:
+  repository: ghcr.io/dokulabs/ingester
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+imagePullSecrets: []
+
+# Ingester Service Configuration
+service:
+  type: LoadBalancer
+  port: 9044
+  sessionAffinity: None
+
+# Ingester Configuration for resource limits and requests
+resources: 
+  limits:
+    cpu: 1000m
+    memory: 1280Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+config:
+  configMap:
+    # If you want to use your own config file, set existingConfig to true and provide the name of the config file
+    existingConfig: false
+    # If existingConfig is set to true and provide the name of the configMap to use
+    name: ""
+    # Name of the config file in the configMap
+    filename: "l" 
+
+  secret:
+    # If you want to use a secret to configure Username and password for TimescaleDB, set existingSecret to true and provide the name of the secret
+    # and the keys for the username and password
+    existingSecret: false
+    # Name of the secret that contains the TimescaleDB User and Password
+    name: ""  
+    # Key in the secret that contains the TimescaleDB User's password         
+    passwordKey: ""    
+    # Key in the secret that contains the TimescaleDB User name
+    usernameKey: ""    
+
+  # Comment out either 'localFile' or 'url' to use only one at a time.
+  # It is preferred to use 'url' for pricingInfo and the link thats provided here as the Doku team regurlary updates this file.
+  pricingInfo:
+    # Path to local JSON file with LLM Pricing data
+    # localFile:
+    #   path: "../assets/pricing.json" # Path to local JSON file with LLM Pricing data
+    # URL to download Pricing data file
+    url: "https://raw.githubusercontent.com/dokulabs/ingester/main/assets/pricing.json"
+
+  # Configuration for the Doku Backend Database (TimescaleDB)
+  dbConfig:
+    name: postgres
+    # if you set secrets.existingSecret to true, Skip the username field 
+    username: admin
+    # if you set secrets.existingSecret to true, Skip the password field
+    password: &dbPassword "DOKU"
+    host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
+    port: &dbPort "5432"
+    sslmode: require
+    maxOpenConns: "10"
+    maxIdleConns: "10"
+    dataTable: DOKU
+    apiKeyTable: APIKEY
+
+  # Configure Platform to export LLM Observability Data from Doku
+  observabilityPlatform:
+    enabled: false
+    grafanaCloud:
+      logsUrl: "https://logs-prod-us-central1.grafana.net"
+      logsUsername: "your_loki_username"
+      cloudAccessToken: "your_grafana_cloud_api_token"
+
+# Configuration for the Doku Backend Database (TimescaleDB)
+timescaledb:
+  enabled: true
+  fullnameOverride: "{{ .Release.Name }}-db"
+  secrets:
+    credentials:
+      PATRONI_admin_PASSWORD: "DOKU"
+  service:
+    primary:
+      type: LoadBalancer
+      port: *dbPort
+  persistentVolumes:
+    data:
+      size: 10Gi

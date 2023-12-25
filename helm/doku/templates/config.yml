@@ -1,0 +1,40 @@
+{{- if not .Values.config.configMap.existingConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "doku.fullname" . }}-ingester-config
+  namespace: {{ .Release.Namespace }}
+data:
+  config.yml: |
+    ingesterPort: {{ .Values.service.port }}
+  
+    pricingInfo:
+      url: {{ .Values.config.pricingInfo.url | quote }}
+
+    dbConfig:
+      name: {{ .Values.config.dbConfig.name | quote }}
+      {{- if .Values.config.dbConfig.username }}
+      username: {{ .Values.config.dbConfig.username | quote }}
+      {{- end }}
+      {{- if .Values.config.dbConfig.password }}
+      password: {{ .Values.config.dbConfig.password | quote }}
+      {{- end }}
+      {{- if .Values.timescaledb.enabled }}
+      host: "{{ .Release.Name }}-db.{{ .Release.Namespace }}.svc.cluster.local"
+      {{- else }}
+      host: {{ .Values.config.dbConfig.host | quote }}
+      {{- end }}
+      port: {{ .Values.config.dbConfig.port }}
+      sslmode: {{ .Values.config.dbConfig.sslmode | quote }}
+      maxOpenConns: {{ .Values.config.dbConfig.maxOpenConns }}
+      maxIdleConns: {{ .Values.config.dbConfig.maxIdleConns }}
+      dataTable: {{ .Values.config.dbConfig.dataTable | quote }}
+      apiKeyTable: {{ .Values.config.dbConfig.apiKeyTable | quote }}
+
+    observabilityPlatform:
+      enabled: {{ .Values.config.observabilityPlatform.enabled }}
+      grafanaCloud:
+        logsUrl: {{ .Values.config.observabilityPlatform.grafanaCloud.logsUrl | quote }}
+        logsUsername: {{ .Values.config.observabilityPlatform.grafanaCloud.logsUsername | quote }}
+        cloudAccessToken: {{ .Values.config.observabilityPlatform.grafanaCloud.cloudAccessToken | quote }}
+{{- end }}

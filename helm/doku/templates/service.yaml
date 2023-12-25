@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "doku.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "doku.fullname" . }}
+spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: {{ include "doku.fullname" . }}
+  sessionAffinity: {{ .Values.service.sessionAffinity }}
+  type: {{ .Values.service.type }}

@@ -1,0 +1,84 @@
+{{- $service := .Values.service.type -}}
+
+---------------------------------------------------------------------------------
+THANK YOU FOR INSTALLING {{ .Chart.Name | upper }}!
+---------------------------------------------------------------------------------
+
+Your Doku deployment has been installed and is ready for use!
+
+{{- if eq $service "LoadBalancer" }}
+---------------------------------------------------------------------------------
+DOKU SERVICE DETAILS: LOADBALANCER
+---------------------------------------------------------------------------------
+
+Doku has been exposed via a LoadBalancer Service.
+
+You can find the external IP of your Doku service by running:
+
+  kubectl get svc -l "app={{ include "doku.fullname" . }}" --namespace {{ .Release.Namespace }}
+
+It may take a few minutes for the LoadBalancer IP to be available.
+
+The Doku URL will be: http://<LoadBalancer-IP>/
+
+{{- else if eq $service "NodePort" }}
+---------------------------------------------------------------------------------
+DOKU SERVICE DETAILS: NODEPORT
+---------------------------------------------------------------------------------
+
+Doku has been exposed via a NodePort Service.
+
+To find the IP address of the node, execute:
+
+  kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalIP")].address}'
+
+To find the NodePort, execute:
+
+  kubectl get svc --namespace {{ .Release.Namespace }} -l "app={{ include "doku.fullname" . }}" -o jsonpath='{.items[0].spec.ports[0].nodePort}'
+
+Use the node's IP and the NodePort value to construct the Doku URL: http://<Node-IP>:<NodePort>
+
+{{- else if eq $service "ClusterIP" }}
+---------------------------------------------------------------------------------
+DOKU SERVICE DETAILS: CLUSTERIP
+---------------------------------------------------------------------------------
+
+Doku has been exposed via a ClusterIP Service.
+
+To access your Doku installation from your local machine, you will need to forward the service port:
+
+  kubectl port-forward svc/{{ include "doku.fullname" . }} <local-port>:{{ .Values.service.port }} --namespace {{ .Release.Namespace }}
+
+The Doku URL will be: http://127.0.0.1:<local-port> (after you've started port-forwarding)
+
+{{- end }}
+
+---------------------------------------------------------------------------------
+GENERATING YOUR FIRST DOKU API KEY
+---------------------------------------------------------------------------------
+
+Use the following CURL command to create your first API key.
+
+Make sure to replace `<Doku-URL>` with the actual address you obtained above. Replace `<Name-for-Api-Key>` with a meaningful name for the API key.
+
+```bash
+curl -X POST <Doku-URL>/api/keys \
+-H 'Authorization: ""' \
+-H 'Content-Type: application/json' \
+-d '{"Name": "<Name-for-Api-Key>"}'
+```
+- Replace `<Doku-URL>` with the external IP or hostname and the service port of your Doku service (for LoadBalancer and NodePort).
+- Replace `<Name-for-Api-Key>` with the name you want for the API Key  
+
+A JSON response containing your new API key will be returned. Store this key securely.
+
+---------------------------------------------------------------------------------
+SENDING LLM OBSERVABILITY DATA TO DOKU
+---------------------------------------------------------------------------------
+
+Once you have your API key and DOKU Url, you can configure the `dokumetry` SDKs in your LLM application to automatically send LLM observability data to your Doku instance.
+
+- Python SDK: https://www.github.com/dokulabs/python-sdk
+- Node SDK: https://www.github.com/dokulabs/node-sdk
+
+For any questions or issues, please refer to the chart README or contact our support team.

@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "doku.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "doku.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "doku.fullname" . }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: ingester
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.port }}
+        command: ["/app/ingester"]
+        {{- if not .Values.config.configMap.existingConfig }}
+        args: ["--config", "/config/config.yml"]
+        {{- else }}
+        args: ["--config", "/config/{{ .Values.config.configMap.filename }}"]
+        {{- end }}
+        {{- if .Values.config.secret.existingSecret }}
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.config.secret.name }}
+              key: {{ .Values.config.secret.passwordKey}}
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.config.secret.name }}
+              key: {{ .Values.config.secret.usernameKey }}
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+        resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+          - name: config-volume
+            mountPath: /config
+      volumes:
+        - name: config-volume
+          configMap:
+            {{- if not .Values.config.configMap.existingConfig }}
+            name: {{ include "doku.fullname" . }}-ingester-config
+            {{- else }}
+            name: {{ .Values.config.configMap.name }}
+            {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    
