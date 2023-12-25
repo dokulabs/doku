@@ -178,6 +178,6 @@ Doku is available under the [GPL-3.0](LICENSE).
 
 For support, issues, or feature requests, submit an issue through the [GitHub issues](https://github.com/dokulabs/doku/issues) associated with this repository.
 
-#### Visualize! Analyze! Optimize!
+## Visualize! Analyze! Optimize!
 
 Join us on this voyage to reshape the future of AI insights. Share your thoughts, suggest features, and explore contributions. Engage with us on [GitHub](https://github.com/dokulabs/doku) and be part of Doku's community-led innovation.
