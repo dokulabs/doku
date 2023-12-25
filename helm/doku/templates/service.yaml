@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: {{ include "doku.fullname" . }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "doku.fullname" . }}
 spec:
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster

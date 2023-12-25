@@ -1,11 +1,11 @@
-{{- if not .Values.config.existingConfig }}
+{{- if not .Values.config.configMap.existingConfig }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "doku.fullname" . }}-ingester-config
   namespace: {{ .Release.Namespace }}
 data:
-  {{ .Values.config.filename }}: |
+  config.yml: |
     ingesterPort: {{ .Values.service.port }}
   
     pricingInfo:

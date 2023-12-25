@@ -7,7 +7,7 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "doku.fullname" . }} 
+      app: {{ include "doku.fullname" . }}
   template:
     metadata:
       labels:
@@ -25,8 +25,8 @@ spec:
         - name: http
           containerPort: {{ .Values.service.port }}
         command: ["/app/ingester"]
-        {{- if not .Values.config.existingConfig }}
-        args: ["--config", "/config/{{ .Values.config.filename }}"]
+        {{- if not .Values.config.configMap.existingConfig }}
+        args: ["--config", "/config/config.yml"]
         {{- else }}
         args: ["--config", "/config/{{ .Values.config.configMap.filename }}"]
         {{- end }}
@@ -59,7 +59,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            {{- if not .Values.config.existingConfig }}
+            {{- if not .Values.config.configMap.existingConfig }}
             name: {{ include "doku.fullname" . }}-ingester-config
             {{- else }}
             name: {{ .Values.config.configMap.name }}
