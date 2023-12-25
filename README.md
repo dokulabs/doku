@@ -1,30 +1,36 @@
 # Doku: Open Source Observability for LLMs
+[![Doku](https://img.shields.io/badge/Doku-orange)](https://github.com/dokulabs/doku)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
+[![License](https://img.shields.io/github/license/dokulabs/doku?label=license&logo=github&color=f80&logoColor=fff%22%20alt=%22License)](https://github.com/dokulabs/python-sdk/blob/main/LICENSE)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/dokulabs/doku)](https://github.com/dokulabs/python-sdk/pulse)
+[![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/python-sdk/graphs/contributors)
 
-Unlock the full potential of your Language Learning Models (LLMs) with Doku—a powerful, open-source observability platform that seamlessly integrates into your existing stack. With a developer-centric approach, Doku goes beyond traditional monitoring to offer a comprehensive suite of features that put you in command of your LLM applications.
 
-Whether you're working with OpenAI, Cohere, or Anthropic, Doku is your partner in harnessing the intricate data flow of LLMs. It tracks all your LLM requests transparently and conveys the insights needed to make data-driven decisions. From monitoring usage and understanding latencies to managing costs and collaborating effortlessly, Doku grants you the lens to view your models in high definition.
+Doku is an open-source observability tool engineered for Large Language Models (LLMs). Designed for ease of integration into existing LLM applications, Doku offers unparalleled insights into usage, performance, and overhead—allowing you to analyze, optimize, and scale your AI applications and LLM usage effectively. 
 
-The future-rich platform empowers you to:
+Whether you're working with OpenAI, Cohere, or Anthropic, It tracks all your LLM requests transparently and conveys the insights needed to make data-driven decisions. From monitoring usage and understanding latencies to managing costs and collaborating effortlessly, Doku grants you the lens to view your models in high definition.
 
-- 📝 **Monitor each LLM request**: Keep a pulse on all interactions with platforms like OpenAI, ensuring no detail slips through the cracks.
-- 💾 **Elevate Data Analysis**: Export crucial LLM data to popular observability platforms such as Grafana Cloud or Datadog.
-- 📊 **Understanding usage for each environement and application**: Gauge performance and expense for each enviroment(staging, production) and alos have the option further drill down to analyze usage per application basis.
-- 🚀 **Collaborate and Share**: Bring your team into the loop with easy data sharing, fostering a collaborative observability environment.
+Leveraging Doku, you can get:
+
+- 🕵️ **In-depth LLM Monitoring**: Track every request to LLM platforms like OpenAI with precision, ensuring comprehensive visibility over your model's interactions.
+- 🎛️ **Granular Usage Insights of your LLM Applications**: Assess your LLM's performance and costs with fine-grained control, breaking down metrics by environment (such as staging or production) or application, to optimize for efficiency and scalability.
+- 📈 **Connect to Observability Platformss**: Export LLM Observablity data and insights from Doku to popular observability platforms such as Grafana Cloud or Datadog.
+- 👥 **Team-centric Workflow**: Enhance team collaboration with seamless data sharing capabilities, creating an integrated environment for observability-driven teamwork.
 
 ## Supported LLMs:
 
-- ✅ OpenAI
-- ✅ Cohere
-- ✅ Anthropic
+- ✅ [OpenAI](https://openai.com/)
+- ✅ [Cohere](https://cohere.com/)
+- ✅ [Anthropic](https://www.anthropic.com/)
 
-And this is only the beginning—as we grow, so will our list of supported LLM platforms. We're dedicated to continually refining our features to enhance your observability experience.
+And this is only the beginning—as we grow, so will our list of supported LLM platforms. We're dedicated to continually refining our features to enhance your LLM and Generative AI observability experience.
 
 
-## Getting Started with Doku
+## 🚀 Getting Started with Doku
 
 Jumpstart your journey with Doku by deploying it via our Helm chart, designed to simplify the installation process on any Kubernetes cluster.
 
-### Deploying with Helm
+### Deploying with Helm 📦 
 
 To install the Doku Helm chart, follow these steps:
 
@@ -48,7 +54,7 @@ helm install doku dokulabs/doku
 
 For a detailed list of configurable parameters for the Helm chart, refer to the `values.yaml` file in the Doku [Helm chart](https://github.com/dokulabs/doku/tree/main/helm/doku).
 
-### Generating an API Key 🔑
+### 🔑 Generating an API Key
 
 Once Doku is up and running, proceed to generate your first API key:
 
@@ -65,19 +71,27 @@ curl -X POST http://<Doku-URL>/api/keys \
 - For your initial API call, `Authorization` header can be set to `""`. 
 - Store the provided API key securely; it will be required to pass the generated and a valid API Ke in `Authorization` header  for subsequent API calls.
 
-### Automatically send LLM Observability Data
+### ⚡️ Automatically send LLM Observability Data to Doku
 
-Elevate your LLM observability by integrating the `dokumetry` Python and NodeJS SDKs into your applications.
+With the `dokumetry` SDKs for [Python](https://github.com/dokulabs/python-sdk) and [NodeJS](https://github.com/dokulabs/node-sdk), sending observability data to Doku is just **TWO** lines of code in your application. Once integrated, the SDKs take care of capturing and conveying LLM usage data directly to your Doku instance, requiring minimal effort on your part.
 
 #### Python
 
-Install the `dokumetry` Python SDK using pip:
+Install the `dokumetry` [Python SDK](https://pypi.org/project/dokumetry/) using pip:
 
 ```shell
 pip install dokumetry
 ```
 
-##### Example Usage for tracking `OpenAI` Usage:
+Add the following two lines to your application code:
+
+```python
+import dokumetry
+
+dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", token="YOUR_DOKU_TOKEN")
+```
+
+##### Example Usage for monitoring `OpenAI` Usage:
 
 ```python
 from openai import OpenAI
@@ -88,7 +102,7 @@ client = OpenAI(
 )
 
 # Pass the above `client` object along with your DOKU URL and Token and this will make sure that all OpenAI calls are automatically tracked.
-dokumetry.init(client, doku_url="YOUR_DOKU_URL", token="YOUR_DOKU_TOKEN")
+dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", token="YOUR_DOKU_TOKEN")
 
 chat_completion = client.chat.completions.create(
     messages=[
@@ -101,15 +115,25 @@ chat_completion = client.chat.completions.create(
 )
 ```
 
+Refer to the `dokumetry` [Python SDK repository](https://github.com/dokulabs/python-sdk) for more advanced configurations and use cases.
+
 #### Node
 
-Install the `dokumetry` NodeJS SDK using npm:
+Install the `dokumetry` [NodeJS SDK](https://www.npmjs.com/package/dokumetry) using npm:
 
 ```shell
 npm install dokumetry
 ```
 
-##### Example Usage for tracking `OpenAI` Usage:
+Add the following two lines to your application code:
+
+```javascript
+import DokuMetry from 'dokumetry';
+
+DokuMetry.init({llm: openai, dokuURL: "YOUR_DOKU_URL", token: "YOUR_DOKU_TOKEN"})
+```
+
+##### Example Usage for monitoring `OpenAI` Usage:
 
 ```javascript
 import OpenAI from 'openai';
@@ -132,7 +156,23 @@ async function main() {
 main();
 ```
 
-Refer to the SDK documentation for more advanced configurations and use cases.
+Refer to the `dokumetry` [NodeJS SDK repository](https://github.com/dokulabs/node-sdk) for more advanced configurations and use cases.
+
+## Security
+
+Doku uses key based authentication mechanism to ensure the security of your data. Be sure to keep your API keys confidential and manage permissions diligently. Refer to our [Security Policy](SECURITY)
+
+## Contributing
+
+We welcome contributions to the Doku project. Please refer to [CONTRIBUTING](CONTRIBUTING) for detailed guidelines on how you can participate.
+
+## License
+
+Doku Ingester is available under the [GPL-3.0](LICENSE).
+
+## Support
+
+For support, issues, or feature requests, submit an issue through the [GitHub issues](https://github.com/dokulabs/doku/issues) associated with this repository.
 
 #### Visualize! Analyze! Optimize!
 
