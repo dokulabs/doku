@@ -2,5 +2,5 @@ dependencies:
 - name: timescaledb-single
   repository: https://charts.timescale.com/
   version: 0.33.1
-digest: sha256:c53e0232c5fe62f6e175a766dcad41a4d1cc1c3c0fece87f1c3f6c339d5fb4db
-generated: "2023-12-20T12:25:43.841258+05:30"
+digest: sha256:840971b4e04954aad1a745ad1dc72e542639550d3d899619634eefdb82ddfcd9
+generated: "2023-12-25T14:30:45.535893+05:30"
