@@ -1,9 +1,13 @@
 # Doku: Open Source Observability for LLMs
 [![Doku](https://img.shields.io/badge/Doku-orange)](https://github.com/dokulabs/doku)
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
 [![License](https://img.shields.io/github/license/dokulabs/doku?label=license&logo=github&color=f80&logoColor=fff%22%20alt=%22License)](https://github.com/dokulabs/python-sdk/blob/main/LICENSE)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/dokulabs/doku)](https://github.com/dokulabs/python-sdk/pulse)
 [![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/python-sdk/graphs/contributors)
+
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
+[![Python Library Version](https://img.shields.io/github/tag/dokulabs/python-sdk.svg?&label=dokumetry%20version&logo=pypi)](https://github.com/dokulabs/python-sdk/tags)
+[![NPM Package Version](https://img.shields.io/github/tag/dokulabs/node-sdk.svg?&label=dokumetry%20version&logo=npm)](https://github.com/dokulabs/node-sdk/tags)
+
 
 
 Doku is an open-source observability tool engineered for Large Language Models (LLMs). Designed for ease of integration into existing LLM applications, Doku offers unparalleled insights into usage, performance, and overhead—allowing you to analyze, optimize, and scale your AI applications and LLM usage effectively. 
