@@ -5,8 +5,8 @@
 [![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/python-sdk/graphs/contributors)
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
-[![Python Library Version](https://img.shields.io/github/tag/dokulabs/python-sdk.svg?&label=dokumetry%20version&logo=pypi)](https://github.com/dokulabs/python-sdk/tags)
-[![NPM Package Version](https://img.shields.io/github/tag/dokulabs/node-sdk.svg?&label=dokumetry%20version&logo=npm)](https://github.com/dokulabs/node-sdk/tags)
+[![Python Library Version](https://img.shields.io/github/tag/dokulabs/python-sdk.svg?&label=dokumetry%20version&logo=pypi)](https://pypi.org/project/dokumetry/)
+[![NPM Package Version](https://img.shields.io/github/tag/dokulabs/node-sdk.svg?&label=dokumetry%20version&logo=npm)](https://www.npmjs.com/package/dokumetry)
 
 
 
