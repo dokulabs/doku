@@ -20,8 +20,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build
-      run: cargo build --release
+
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
