@@ -76,8 +76,8 @@ curl -X POST http://<Doku-URL>/api/keys \
 ```
 
 **Note**: 
-- For your initial API call, `Authorization` header can be set to `""`. 
-- Store the provided API key securely; it will be required to pass the generated and a valid API Ke in `Authorization` header  for subsequent API calls.
+> - For your initial API call, `Authorization` header can be set to `""`. 
+> - Store the provided API key securely; it will be required to pass the generated and a valid API Ke in `Authorization` header  for subsequent API calls.
 
 ### ⚡️ Automatically send LLM Observability Data to Doku
 
