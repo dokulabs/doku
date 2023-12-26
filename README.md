@@ -1,6 +1,7 @@
 # Doku: Open Source Observability for LLMs
 [![Doku](https://img.shields.io/badge/Doku-orange)](https://github.com/dokulabs/doku)
 [![License](https://img.shields.io/github/license/dokulabs/doku?label=license&logo=github&color=f80&logoColor=fff%22%20alt=%22License)](https://github.com/dokulabs/python-sdk/blob/main/LICENSE)
+[![Downloads](https://static.pepy.tech/badge/dokumetry/month)](https://pepy.tech/project/dokumetry)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/dokulabs/doku)](https://github.com/dokulabs/python-sdk/pulse)
 [![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/python-sdk/graphs/contributors)
 
