@@ -56,7 +56,10 @@ helm repo update
 helm install doku dokulabs/doku
 ```
 
-For a detailed list of configurable parameters for the Helm chart, refer to the `values.yaml` file in the Doku [Helm chart](https://github.com/dokulabs/doku/tree/main/helm/doku).
+**NOTE**:
+> As Doku does not have a built-in visualization UI yet, it is preferred that you set up the `observabilityPlatform` configuration within the [values.yaml](https://github.com/dokulabs/doku/tree/main/helm/doku/values.yaml) file in the Helm Chart. Doing so enables visualization of the LLM Observability data processed by Doku using an external observability platform.
+
+For a detailed list of configurable parameters for the Helm chart, refer to the `values.yaml` file in the [Helm chart](https://github.com/dokulabs/doku/tree/main/helm/doku).
 
 ### 🔑 Generating an API Key
 
