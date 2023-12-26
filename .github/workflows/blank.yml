@@ -29,6 +29,6 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./README.md
-        asset_name: README.md
+        asset_name: README
         tag: 0.0.1
         overwrite: true
