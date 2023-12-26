@@ -41,7 +41,7 @@ To install the Doku Helm chart, follow these steps:
 1. Add the Doku Helm repository to your Helm setup:
 
 ```shell
-helm repo add dokulabs https://dokulabs.io/helm/charts
+helm repo add dokulabs https://dokulabs.github.io/helm/
 ```
 
 2. Update your Helm repositories to fetch the latest chart information:
