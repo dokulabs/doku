@@ -50,7 +50,7 @@ helm repo add dokulabs https://dokulabs.github.io/helm/
 helm repo update
 ```
 
-3. Install the Doku chart with the release name `my-doku`:
+3. Install the Doku chart with the release name `doku`:
 
 ```shell
 helm install doku dokulabs/doku
