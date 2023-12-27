@@ -16,6 +16,9 @@ Doku is an open-source observability tool engineered for Large Language Models (
 
 Whether you're working with OpenAI, Cohere, or Anthropic, It tracks all your LLM requests transparently and conveys the insights needed to make data-driven decisions. From monitoring usage and understanding latencies to managing costs and collaborating effortlessly, Doku grants you the lens to view your models in high definition.
 
+#### How it works
+![Doku Banner](https://raw.githubusercontent.com/dokulabs/.github/main/profile/assets/banner.jpg)
+
 Leveraging Doku, you can get:
 
 - 🕵️ **In-depth LLM Monitoring**: Track every request to LLM platforms like OpenAI with precision, ensuring comprehensive visibility over your model's interactions.
