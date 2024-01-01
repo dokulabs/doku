@@ -1,8 +1,8 @@
 ---
-name: Feature request
+name: 'Feature: '
 about: Suggest an idea for this project
 title: ''
-labels: enhancement
+labels: 'feature :rocket:, Up for Grab! :raised_hand:'
 assignees: ''
 
 ---
