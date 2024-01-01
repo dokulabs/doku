@@ -1,14 +1,14 @@
 # Doku: Open Source Observability for LLMs
 [![Doku](https://img.shields.io/badge/Doku-orange)](https://github.com/dokulabs/doku)
-[![License](https://img.shields.io/github/license/dokulabs/doku?label=license&logo=github&color=f80&logoColor=fff%22%20alt=%22License)](https://github.com/dokulabs/python-sdk/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/dokulabs/doku?label=license&logo=github&color=f80&logoColor=fff%22%20alt=%22License)](https://github.com/dokulabs/doku/blob/main/LICENSE)
 [![Downloads](https://static.pepy.tech/badge/dokumetry/month)](https://pepy.tech/project/dokumetry)
-[![GitHub Last Commit](https://img.shields.io/github/last-commit/dokulabs/doku)](https://github.com/dokulabs/python-sdk/pulse)
-[![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/python-sdk/graphs/contributors)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/dokulabs/doku)](https://github.com/dokulabs/doku/pulse)
+[![GitHub Contributors](https://img.shields.io/github/contributors/dokulabs/doku)](https://github.com/dokulabs/doku/graphs/contributors)
 
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/doku)](https://artifacthub.io/packages/search?repo=doku)
 [![Helm Version](https://img.shields.io/github/tag/dokulabs/helm.svg?&label=Chart%20Version&logo=helm)](https://github.com/dokulabs/helm/tags)
-[![Python Library Version](https://img.shields.io/github/tag/dokulabs/python-sdk.svg?&label=dokumetry%20version&logo=pypi)](https://pypi.org/project/dokumetry/)
-[![NPM Package Version](https://img.shields.io/github/tag/dokulabs/node-sdk.svg?&label=dokumetry%20version&logo=npm)](https://www.npmjs.com/package/dokumetry)
+[![Python Library Version](https://img.shields.io/github/tag/dokulabs/dokumetry-python.svg?&label=dokumetry%20version&logo=pypi)](https://pypi.org/project/dokumetry/)
+[![NPM Package Version](https://img.shields.io/github/tag/dokulabs/dokumetry-node.svg?&label=dokumetry%20version&logo=npm)](https://www.npmjs.com/package/dokumetry)
 
 
 
@@ -85,7 +85,7 @@ curl -X POST http://<Doku-URL>/api/keys \
 
 ### ⚡️ Automatically send LLM Observability Data to Doku
 
-With the `dokumetry` SDKs for [Python](https://github.com/dokulabs/python-sdk) and [NodeJS](https://github.com/dokulabs/node-sdk), sending observability data to Doku is just **TWO** lines of code in your application. Once integrated, the SDKs take care of capturing and conveying LLM usage data directly to your Doku instance, requiring minimal effort on your part.
+With the `dokumetry` SDKs for [Python](https://github.com/dokulabs/dokumetry-python) and [NodeJS](https://github.com/dokulabs/dokumetry-node), sending observability data to Doku is just **TWO** lines of code in your application. Once integrated, the SDKs take care of capturing and conveying LLM usage data directly to your Doku instance, requiring minimal effort on your part.
 
 #### Python
 
@@ -100,7 +100,7 @@ Add the following two lines to your application code:
 ```python
 import dokumetry
 
-dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", token="YOUR_DOKU_TOKEN")
+dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", api_key="YOUR_DOKU_TOKEN")
 ```
 
 ##### Example Usage for monitoring `OpenAI` Usage:
@@ -113,8 +113,8 @@ client = OpenAI(
     api_key="YOUR_OPENAI_KEY"
 )
 
-# Pass the above `client` object along with your DOKU URL and Token and this will make sure that all OpenAI calls are automatically tracked.
-dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", token="YOUR_DOKU_TOKEN")
+# Pass the above `client` object along with your DOKU URL and API key and this will make sure that all OpenAI calls are automatically tracked.
+dokumetry.init(llm=client, doku_url="YOUR_DOKU_URL", api_key="YOUR_DOKU_TOKEN")
 
 chat_completion = client.chat.completions.create(
     messages=[
@@ -127,7 +127,7 @@ chat_completion = client.chat.completions.create(
 )
 ```
 
-Refer to the `dokumetry` [Python SDK repository](https://github.com/dokulabs/python-sdk) for more advanced configurations and use cases.
+Refer to the `dokumetry` [Python SDK repository](https://github.com/dokulabs/dokumetry-python) for more advanced configurations and use cases.
 
 #### Node
 
@@ -142,7 +142,7 @@ Add the following two lines to your application code:
 ```javascript
 import DokuMetry from 'dokumetry';
 
-DokuMetry.init({llm: openai, dokuURL: "YOUR_DOKU_URL", token: "YOUR_DOKU_TOKEN"})
+DokuMetry.init({llm: openai, dokuURL: "YOUR_DOKU_URL", apiKey: "YOUR_DOKU_TOKEN"})
 ```
 
 ##### Example Usage for monitoring `OpenAI` Usage:
@@ -155,8 +155,8 @@ const openai = new OpenAI({
   apiKey: 'My API Key', // defaults to process.env["OPENAI_API_KEY"]
 });
 
-// Pass the above `openai` object along with your DOKU URL and Token and this will make sure that all OpenAI calls are automatically tracked.
-DokuMetry.init({llm: openai, dokuURL: "YOUR_DOKU_URL", token: "YOUR_DOKU_TOKEN"})
+// Pass the above `openai` object along with your DOKU URL and API key and this will make sure that all OpenAI calls are automatically tracked.
+DokuMetry.init({llm: openai, dokuURL: "YOUR_DOKU_URL", apiKey: "YOUR_DOKU_TOKEN"})
 
 async function main() {
   const chatCompletion = await openai.chat.completions.create({
@@ -168,7 +168,7 @@ async function main() {
 main();
 ```
 
-Refer to the `dokumetry` [NodeJS SDK repository](https://github.com/dokulabs/node-sdk) for more advanced configurations and use cases.
+Refer to the `dokumetry` [NodeJS SDK repository](https://github.com/dokulabs/dokumetry-node) for more advanced configurations and use cases.
 
 ## Security
 
