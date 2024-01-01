@@ -1,5 +1,5 @@
 ---
-name: 'Feature: '
+name: Feature Request
 about: Suggest an idea for this project
 title: ''
 labels: 'feature :rocket:, Up for Grab! :raised_hand:'
