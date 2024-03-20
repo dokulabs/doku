@@ -14,8 +14,10 @@ import (
 	"ingester/connections"
 	"ingester/cost"
 	"ingester/db"
+	"ingester/nocode"
 
 	"github.com/common-nighthawk/go-figure"
+	_ "github.com/go-co-op/gocron"
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -79,6 +81,20 @@ func main() {
 
 	// Cache eviction setup for the API Keys and Connections
 	auth.InitializeCacheEviction()
+
+	// // Initialize a new scheduler
+	// s := gocron.NewScheduler(time.UTC)
+
+	// // Schedule RunOpenAITask to run at 11:50 PM UTC every day
+	// _, err = s.Every(1).Day().At("08:23").Do(nocode.RunOpenAITask)
+	// if err != nil {
+	// 	log.Error().Err(err).Msg("Failed to schedule the OpenAI task for retrieval of usage data")
+	// }
+
+	// s.StartAsync()
+
+	nocode.RunOpenAITask()
+
 	// Initialize the HTTP server routing
 	r := mux.NewRouter()
 	r.HandleFunc("/api/push", api.DataHandler).Methods("POST")
